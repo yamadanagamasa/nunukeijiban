@@ -59,12 +59,12 @@ while( $res = fgets($fp)){
 <html lang="ja" dir="ltr">
   <head>
     <meta charset="utf-8" name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
-    <title>postform</title>
-    <link rel="stylesheet" href="stylesheet.css">
+    <title>ぬぬ掲示板</title>
+    <link rel="stylesheet" href="keiji.css">
   </head>
   <body>
     <div class="postform">
-      <h2>投稿フォーム</h2>
+      <h2>ぬぬ掲示板</h2>
       <form class="form" action="index.php"  onsubmit="return check()" method="post">
         <h3>名前</h3>
         <input type="text" name="name" id="name" value="">
