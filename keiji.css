@@ -2,15 +2,7 @@ body{
     background-image: url("TSU1994097_TP_V.jpg");
     width: 100%;
 }
-.postform{
-    background-color: rgb(253, 147, 108);
-    width: 50%;
-}
-.result{
-    background-color: rgb(255, 173, 144);
-    width: 50%;
-}
 .posts{
-    background-color: rgb(253, 147, 108);
-    width: 50%;
+    background-color: rgb(174, 202, 255);
+    width: 45%;
 }
