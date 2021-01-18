@@ -2,9 +2,9 @@
 function h($str) {
     return htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
 }
-
+date_default_timezone_set('Asia/Tokyo');
 session_start(); // 1
-
+$hizuke = date("Y/m/d H:i:s") . "\n";
 $name = (string)filter_input(INPUT_POST, 'name'); 
 $text = (string)filter_input(INPUT_POST, 'text');
 $token = (string)filter_input(INPUT_POST, 'token'); // 3
@@ -12,7 +12,7 @@ $token = (string)filter_input(INPUT_POST, 'token'); // 3
 $fp = fopen('data.csv', 'a+b');
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && sha1(session_id()) === $token) { // 3
     flock($fp, LOCK_EX);
-    fputcsv($fp, [$name, $text]);
+    fputcsv($fp, [$name, $text,$hizuke]);
     rewind($fp);
 }
 flock($fp, LOCK_SH);
