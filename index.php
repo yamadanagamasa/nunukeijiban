@@ -28,6 +28,7 @@ fclose($fp);
 <link rel="stylesheet" href="keiji.css">
 <title>ぬぬ掲示板</title>
 <h1>ぬぬ掲示板</h1>
+<h2>サーバーの都合上30分誰も使用してないと書き込みが消えます</h2>
 <section>
     <h2>新規投稿</h2>
     <form action="" method="post">
