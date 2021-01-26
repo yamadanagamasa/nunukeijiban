@@ -2,7 +2,16 @@ body{
     background-image: url("TSU1994097_TP_V.jpg");
     width: 100%;
 }
-.hyou{
-    background-color: rgb(204, 255, 174);
-    width: 48%;
+
+.hyou {
+    padding: 0.5em 1em;
+    margin: 2em 0;
+    color: #00BCD4;
+    background: #e4fcff;/*背景色*/
+    border-top: solid 6px #1dc1d6;
+    box-shadow: 0 3px 4px rgba(0, 0, 0, 0.32);/*影*/
+}
+.hyou p {
+    margin: 0; 
+    padding: 0;
 }
