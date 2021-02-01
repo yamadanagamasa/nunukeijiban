@@ -1,111 +1,54 @@
+
 <?php
-//変数
-$name = "";
-$title = "";
-$sentence = "";
-$errorCount = array();
-// 日付
+function h($str) {
+    return htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
+}
 date_default_timezone_set('Asia/Tokyo');
-$today = date("Y/m/d H:i:s");
-// 入力された値のチェック
-if(!isset($_POST["name"]) || !is_string($_POST["name"])){
-  $errorCount['nameERROR'] = '1';
-  $name = '不正な名前';
-}elseif($_POST["name"] === ''){
-  $name = "名無し";
-}else{
-  $name = $_POST["name"];
-}
-if(!isset($_POST["title"]) || !is_string($_POST["title"])){
-  $errorCount['titleERROR'] = '1';
-  $title = '不正なtitle';
-}elseif($_POST["title"] === ''){
-  $title = "無題";
-}else{
-  $title = $_POST["title"];
-}
-if (!isset($_POST["sentence"]) || !is_string($_POST["sentence"])){
-  $errorCount['sentenceERROR'] = '1';
-  $sentence = null;
-}elseif ($_POST["sentence"] === ''){
-  $errorCount['sentenceERROR'] = '2';
-  $sentence ="";
-}else {
-  $sentence = $_POST["sentence"];
-}
-//投稿
+session_start(); // 1
+$hizuke = date("Y/m/d H:i:s") . "\n";
+$name = (string)filter_input(INPUT_POST, 'name'); 
+$text = (string)filter_input(INPUT_POST, 'text');
+$token = (string)filter_input(INPUT_POST, 'token'); // 3
 
- if(isset($_POST["SUBMIT"]) ){
-   $fp = fopen("data.txt", "a");
-   fwrite($fp, $name."\t".$title."\t".$sentence."\t".$today."\n");
-   header("Location:http://192.168.33.10:8000/index.php");
-   exit;
- }
-$fp = fopen("data.txt","r");
-$dataArr = array();
-while( $res = fgets($fp)){
-  $tmp = explode("\t",$res);
-  $arr = array(
-    "name" => $tmp[0],
-    "title" => $tmp[1],
-    "sentence" => $tmp[2],
-    "date"=> $tmp[3]
-  );
-  $dataArr[] = $arr;
+$fp = fopen('data.csv', 'a+b');
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && sha1(session_id()) === $token) { // 3
+    flock($fp, LOCK_EX);
+    fputcsv($fp, [$name, $text,$hizuke]);
+    rewind($fp);
 }
- ?>
+flock($fp, LOCK_SH);
+while ($row = fgetcsv($fp)) {
+    $rows[] = $row;
+}
+flock($fp, LOCK_UN);
+fclose($fp);
 
+?>
 <!DOCTYPE html>
-<html lang="ja" dir="ltr">
-  <head>
-    <meta charset="utf-8" name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
-    <title>postform</title>
-    <link rel="stylesheet" href="stylesheet.css">
-  </head>
-  <body>
-    <div class="postform">
-      <h2>投稿フォーム</h2>
-      <form class="form" action="index.php"  onsubmit="return check()" method="post">
-        <h3>名前</h3>
-        <input type="text" name="name" id="name" value="">
-        <h3>タイトル</h3>
-        <input type="text" name="title" id="title" value="">
-        <h3>本文</h3>
-        <textarea class="honbun" name="sentence" id="body" rows="8" cols="80"></textarea>
-        <br>
-        <input class="input" type="submit" name="SUBMIT" value="投稿">
-        <input type="reset" value="リセット">
-
-      </form>
-    </div>
-    <div class="result">
-      <h2>投稿</h2>
-
-      <dl>
-      <?php foreach($dataArr as $data): ?>
-        <li>
-          <div class="posts">
-          <?php echo $data["name"];?>:<?php echo $data["title"]; ?>:<?php echo $data["date"]; ?>
-          <br>
-          <?php echo $data["sentence"]; ?>
-          </div>
-        </li>
-      <?php endforeach; ?>
-     </dl>
-    </div>
-
-  <script>
-    function check(){
-      let name = document.getElementById('name').value;
-      let title = document.getElementById('title').value;
-      let body = document.getElementById('body').value;
-        if(document.getElementById('body').value==""){
-        alert("本文を入力してください");
-            return false;
-        }else{
-        return confirm("名前:"+name+"\n"+"メールアドレス:"+title+"\n"+"内容:"+body+"\n"+"以上の内容で投稿しますか？");
-        }
-    }
-  </script>
-  </body>
-</html>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="keiji.css">
+<title>ぬぬ掲示板</title>
+<h1>ぬぬ掲示板</h1>
+<section>
+    <h2>新規投稿</h2>
+    <form action="" method="post">
+        名前: <input type="text" name="name" value=""><br>
+        本文: <input type="text" name="text" value=""><br>
+        <button type="submit">投稿</button>
+        <input type="hidden" name="token" value="<?=h(sha1(session_id())) /*2*/ ?>">
+    </form>
+</section>
+<section>
+    <h2>投稿一覧</h2>
+    <div class="hyou">
+<?php if (!empty($rows)): ?>
+    <ul>
+<?php foreach ($rows as $row): ?>
+        <li><?=h($row[1])?> (<?=h($row[0])?>)</li>
+<?php endforeach; ?>
+    </ul>
+<?php else: ?>
+    <p>投稿はまだありません</p>
+<?php endif; ?>
+</div>
+</section>
