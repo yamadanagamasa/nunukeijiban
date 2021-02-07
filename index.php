@@ -28,6 +28,7 @@ fclose($fp);
 <meta charset="UTF-8">
 <link rel="stylesheet" href="keiji.css">
 <title>ぬぬ掲示板</title>
+<div class= "box8">
 <h1>ぬぬ掲示板</h1>
 <section>
     <h2>新規投稿</h2>
@@ -50,5 +51,6 @@ fclose($fp);
 <?php else: ?>
     <p>投稿はまだありません</p>
 <?php endif; ?>
+</div>
 </div>
 </section>

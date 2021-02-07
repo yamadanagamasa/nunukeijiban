@@ -2,7 +2,17 @@ body{
     background-image: url("TSU1994097_TP_V.jpg");
     width: 100%;
 }
-
+.box8 {
+    padding: 0.5em 1em;
+    margin: 2em 0;
+    color: #232323;
+    background: #fff8e8;
+    border-left: solid 10px #ffc06e;
+}
+.box8 p {
+    margin: 0; 
+    padding: 0;
+}
 .hyou {
     padding: 0.5em 1em;
     margin: 2em 0;
