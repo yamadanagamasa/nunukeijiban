@@ -41,6 +41,10 @@ fclose($fp);
 </section>
 <section>
     <h2>投稿一覧</h2>
+<?php
+$news = file_get_contents('osirase.txt');
+print($news);
+?>
     <div class="hyou">
 <?php if (!empty($rows)): ?>
     <ul>
