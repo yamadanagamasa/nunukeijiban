@@ -27,6 +27,10 @@ fclose($fp);
 <!DOCTYPE html>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="keiji.css">
+<?php
+$news = file_get_contents('osirase.txt');
+print($news);
+?>
 <title>ぬぬ掲示板</title>
 <div class= "box8">
 <h1>ぬぬ掲示板</h1>
@@ -41,10 +45,7 @@ fclose($fp);
 </section>
 <section>
     <h2>投稿一覧</h2>
-<?php
-$news = file_get_contents('osirase.txt');
-print($news);
-?>
+
     <div class="hyou">
 <?php if (!empty($rows)): ?>
     <ul>
