@@ -24,6 +24,7 @@ flock($fp, LOCK_UN);
 fclose($fp);
 
 ?>
+<div class= "box8">
 <!DOCTYPE html>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="keiji.css">
@@ -31,7 +32,7 @@ fclose($fp);
 readfile('osirase.txt');
 ?>
 <title>ぬぬ掲示板</title>
-<div class= "box8">
+
 <h1>ぬぬ掲示板</h1>
 <section>
     <h2>新規投稿</h2>
