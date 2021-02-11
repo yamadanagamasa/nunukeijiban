@@ -28,8 +28,7 @@ fclose($fp);
 <meta charset="UTF-8">
 <link rel="stylesheet" href="keiji.css">
 <?php
-$news = file_get_contents('osirase.txt');
-print($news);
+readfile('osirase.txt');
 ?>
 <title>ぬぬ掲示板</title>
 <div class= "box8">
