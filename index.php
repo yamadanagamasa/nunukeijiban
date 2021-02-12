@@ -58,4 +58,14 @@ readfile('osirase.txt');
 <?php endif; ?>
 </div>
 </div>
+<div class="footer">
+            <div class="footer-left">
+                <p>このサイトをシェア</p>
+                <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="nunu" data-url="https://yamadanagamasa.github.io/nunupages/" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </div>
+            <div class="footer-right">
+                &copy; nunu.
+             </div>
+            <div class="clear"></div>
+        </div>
 </section>

@@ -24,3 +24,22 @@
     margin: 0; 
     padding: 0;
 }
+.footer {
+    height: 120px;
+    width: 100%;
+    background-color: #2f3a44;
+    color: right;
+    padding-top: 60px;
+}
+.footer-left {
+    float: left;
+    color: rgb(253, 251, 251);
+}
+.footer-right {
+    float: right;
+    padding-top: 50px;
+    color: cornsilk;
+}
+.footer-left p {
+    margin-bottom: 8px;
+}
