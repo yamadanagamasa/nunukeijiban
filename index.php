@@ -32,7 +32,7 @@ fclose($fp);
 readfile('osirase.txt');
 ?>
 <title>ぬぬ掲示板</title>
-
+<div class="box9">
 <h1>ぬぬ掲示板</h1>
 <section>
     <h2>新規投稿</h2>
@@ -43,6 +43,7 @@ readfile('osirase.txt');
         <input type="hidden" name="token" value="<?=h(sha1(session_id())) /*2*/ ?>">
     </form>
 </section>
+</div>
 <section>
     <h2>投稿一覧</h2>
 
