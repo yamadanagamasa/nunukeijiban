@@ -14,9 +14,9 @@
 .hyou {
     padding: 0.5em 1em;
     margin: 2em 0;
-    color: #00BCD4;
+    color: #ffc06e;
     background: #e4fcff;/*背景色*/
-    border-top: solid 6px #1dc1d6;
+    border-top: solid 6px #ffc06e;
     box-shadow: 0 3px 4px rgba(0, 0, 0, 0.32);/*影*/
     width: 100%;
 }
@@ -44,5 +44,15 @@
     margin-bottom: 8px;
 }
 .nui{
-    background: #ffb300;  
+    background: #ffc06e;  
+}
+.box9 {
+    padding: 0.5em 1em;
+    margin: 2em 0;
+    background: #ffebe9;
+    border-top: solid 10px #ff7d6e;
+}
+.box9 p {
+    margin: 0; 
+    padding: 0;
 }
