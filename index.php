@@ -1,4 +1,4 @@
-
+<div class='nui'>
 <?php
 function h($str) {
     return htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
@@ -69,3 +69,4 @@ readfile('osirase.txt');
             <div class="clear"></div>
         </div>
 </section>
+</div>
