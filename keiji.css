@@ -5,7 +5,7 @@
     color: #232323;
     background: #fff8e8;
     border-left: solid 10px #ffc06e;
-    width: 100%;
+    width: 60%;
 }
 .box8 p {
     margin: 0; 
@@ -18,7 +18,7 @@
     background: #e4fcff;/*背景色*/
     border-top: solid 6px #ffc06e;
     box-shadow: 0 3px 4px rgba(0, 0, 0, 0.32);/*影*/
-    width: 100%;
+    width: 60%;
 }
 .hyou p {
     margin: 0; 
@@ -51,6 +51,7 @@
     margin: 2em 0;
     background: #ffebe9;
     border-top: solid 10px #ff7d6e;
+    width: 60%;
 }
 .box9 p {
     margin: 0; 
