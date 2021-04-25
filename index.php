@@ -180,7 +180,9 @@ fclose($fp);
       <div class="container">
         <h1 class="title">
           掲示板
-        </h1>    </div>
+        </h1>    
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        </div>
     </div>
   </section>
   <br>
