@@ -30,6 +30,10 @@ fclose($fp);
     <title>ぬぬ掲示板</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
 <style>
+.box{
+  margin-right: 20%;
+    margin-left: 20%;
+}
     body {
       background-color: #eeeeee;
       text-align:center;
@@ -192,26 +196,6 @@ fclose($fp);
   <br>
   <br>
   <br>
-  <section>
-    <h2 class = "title">新規投稿</h2>
-    <form action="" method="post">
-    <p class ="subtitle">名前</p> 
-        <input type="text" name="name" value="">
-        <br>
-         <br>
-    <p class ="subtitle">本文</p> 
-   
-        <input type="text" name="text" value="">
-        <br>
-        <br>
-        <button   class="button is-success" type="submit">投稿</button>
-        <input type="hidden" name="token" value="<?=h(sha1(session_id())) /*2*/ ?>">
-    </form>
-  <br>
-  <br>
-  <br>
-  <br>
-  <section>
     <h2 class ="title">投稿一覧</h2>
 
     <div class="hyou">
@@ -226,6 +210,38 @@ fclose($fp);
 <?php endif; ?>
 </div>
 </div>
+<br>
+  <br>
+  <br>
+  <br>  <br>
+  <br>
+  <br>
+  <br>  <br>
+  <br>
+  <br>
+  <br>
+<section>
+<form class="box">
+    <h2 class = "title">新規投稿</h2>
+    <form action="" method="post">
+    <div class="field">
+    <label class="label">名前</label>
+        <input type="text" name="name" value="">
+        </div>
+         <label class="label">本文</label>
+   
+        <input type="text" name="text" value="">
+        <br>
+        <br>
+        <button   class="button is-success" type="submit">投稿</button>
+        <input type="hidden" name="token" value="<?=h(sha1(session_id())) /*2*/ ?>">
+    </form>
+    </form>
+  <br>
+  <br>
+  <br>
+  <br>
+  <section>
   <br>
   <br>
   <br>
