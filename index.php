@@ -8,7 +8,6 @@ $hizuke = date("Y/m/d H:i:s") . "\n";
 $name = (string)filter_input(INPUT_POST, 'name'); 
 $text = (string)filter_input(INPUT_POST, 'text');
 $token = (string)filter_input(INPUT_POST, 'token'); // 3
-
 $fp = fopen('data.csv', 'a+b');
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && sha1(session_id()) === $token) { // 3
     flock($fp, LOCK_EX);
@@ -21,7 +20,6 @@ while ($row = fgetcsv($fp)) {
 }
 flock($fp, LOCK_UN);
 fclose($fp);
-
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -30,10 +28,10 @@ fclose($fp);
     <title>ぬぬ掲示板</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
 <style>
-.box{
+ .box{
   margin-right: 20%;
     margin-left: 20%;
-}
+ }
     body {
       background-color: #eeeeee;
       text-align:center;
@@ -44,25 +42,20 @@ fclose($fp);
   /* Sliding Squares Loading Spinner
      Inspired by https://www.uplabs.com/posts/slidin-squares-loader by Vitaly Silkin 
      Implemented in CSS by Tom Adey */
-
   .container {
     display: flex;
     justify-content: center;
     align-items: center;
   }
-
   .loadingspinner {
     --square: 26px;
     --offset: 30px;
-
     --duration: 2.4s;
     --delay: 0.2s;
     --timing-function: ease-in-out;
-
     --in-duration: 0.4s;
     --in-delay: 0.1s;
     --in-timing-function: ease-out;
-
     width: calc( 3 * var(--offset) + var(--square));
     height: calc( 2 * var(--offset) + var(--square));
     padding: 0px;
@@ -72,7 +65,6 @@ fclose($fp);
     margin-bottom: 30px;
     position: relative;
   }
-
   .loadingspinner div {
     display: inline-block;
     background: darkorange;
@@ -88,14 +80,12 @@ fclose($fp);
     font-size: 6pt;
     color: black;
   }
-
   .loadingspinner #square1 {
     left: calc( 0 * var(--offset) );
     top:  calc( 0 * var(--offset) );
     animation: square1 var(--duration) var(--delay) var(--timing-function) infinite,
                squarefadein var(--in-duration) calc(1 * var(--in-delay)) var(--in-timing-function) both;
   }
-
   .loadingspinner #square2 {
     left: calc( 0 * var(--offset) );
     top:  calc( 1 * var(--offset) );
@@ -109,27 +99,23 @@ fclose($fp);
     animation: square3 var(--duration) var(--delay) var(--timing-function) infinite,
                squarefadein var(--in-duration) calc(2 * var(--in-delay)) var(--in-timing-function) both;
   }
-
   .loadingspinner #square4 {
     left: calc( 2 * var(--offset) );
     top:  calc( 1 * var(--offset) );
     animation: square4 var(--duration) var(--delay) var(--timing-function) infinite,
                squarefadein var(--in-duration) calc(3 * var(--in-delay)) var(--in-timing-function) both;
   }
-
   .loadingspinner #square5 {
     left: calc( 3 * var(--offset) );
     top:  calc( 1 * var(--offset) );
     animation: square5 var(--duration) var(--delay) var(--timing-function) infinite,
                squarefadein var(--in-duration) calc(4 * var(--in-delay)) var(--in-timing-function) both;
   }
-
   @keyframes square1 {
     0%      {left: calc( 0 * var(--offset) ); top: calc( 0 * var(--offset) ); }
     8.333%  {left: calc( 0 * var(--offset) ); top: calc( 1 * var(--offset) ); }
     100%    {left: calc( 0 * var(--offset) ); top: calc( 1 * var(--offset) ); }
   }
-
   @keyframes square2 {
     0%      {left: calc( 0 * var(--offset) ); top: calc( 1 * var(--offset) ); }
     8.333%  {left: calc( 0 * var(--offset) ); top: calc( 2 * var(--offset) ); }
@@ -139,7 +125,6 @@ fclose($fp);
     91.67%  {left: calc( 1 * var(--offset) ); top: calc( 0 * var(--offset) ); }
     100%    {left: calc( 0 * var(--offset) ); top: calc( 0 * var(--offset) ); }
   }
-
   @keyframes square3 {
     0%,100% {left: calc( 1 * var(--offset) ); top: calc( 1 * var(--offset) ); }
     16.67%  {left: calc( 1 * var(--offset) ); top: calc( 1 * var(--offset) ); }
@@ -151,7 +136,6 @@ fclose($fp);
     83.33%  {left: calc( 1 * var(--offset) ); top: calc( 2 * var(--offset) ); }
     91.67%  {left: calc( 1 * var(--offset) ); top: calc( 1 * var(--offset) ); }
   }
-
   @keyframes square4 {
     0%      {left: calc( 2 * var(--offset) ); top: calc( 1 * var(--offset) ); }
     33.33%  {left: calc( 2 * var(--offset) ); top: calc( 1 * var(--offset) ); }
@@ -160,7 +144,6 @@ fclose($fp);
     58.33%  {left: calc( 3 * var(--offset) ); top: calc( 1 * var(--offset) ); }
     100%    {left: calc( 3 * var(--offset) ); top: calc( 1 * var(--offset) ); }
   }
-
   @keyframes square5 {
     0%      {left: calc( 3 * var(--offset) ); top: calc( 1 * var(--offset) ); }
     50.00%  {left: calc( 3 * var(--offset) ); top: calc( 1 * var(--offset) ); }
@@ -169,7 +152,6 @@ fclose($fp);
     75.00%  {left: calc( 2 * var(--offset) ); top: calc( 1 * var(--offset) ); }
     100%    {left: calc( 2 * var(--offset) ); top: calc( 1 * var(--offset) ); }
   }
-
   @keyframes squarefadein {
     0%      {transform: scale(0.75); opacity: 0.0;}
     100%    {transform: scale(1.0); opacity: 1.0;}
@@ -184,6 +166,8 @@ fclose($fp);
       <div class="container">
         <h1 class="title">
           掲示板
+        </h1></div>
+<br><br>
         </h1>    
         <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
         </div>
@@ -196,8 +180,8 @@ fclose($fp);
   <br>
   <br>
   <br>
+  <div class="box">
     <h2 class ="title">投稿一覧</h2>
-
     <div class="hyou">
 <?php if (!empty($rows)): ?>
     <ul>
@@ -210,25 +194,18 @@ fclose($fp);
 <?php endif; ?>
 </div>
 </div>
-<br>
-  <br>
-  <br>
-  <br>  <br>
-  <br>
-  <br>
-  <br>  <br>
   <br>
   <br>
   <br>
-<section>
-<form class="box">
+  <section>
+  <div class="box">
     <h2 class = "title">新規投稿</h2>
     <form action="" method="post">
-    <div class="field">
-    <label class="label">名前</label>
+   <label class="label">名前</label>
         <input type="text" name="name" value="">
-        </div>
-         <label class="label">本文</label>
+        <br>
+         <br>
+         <label class="label">本文</label> 
    
         <input type="text" name="text" value="">
         <br>
@@ -236,15 +213,12 @@ fclose($fp);
         <button   class="button is-success" type="submit">投稿</button>
         <input type="hidden" name="token" value="<?=h(sha1(session_id())) /*2*/ ?>">
     </form>
-    </form>
+    </div>
   <br>
   <br>
   <br>
   <br>
   <section>
-  <br>
-  <br>
-  <br>
   <footer class="footer">
     <div class="content has-text-centered">
       <a href="https://yamadanagamasa.github.io/nunupages/"> © nunu.</a>
