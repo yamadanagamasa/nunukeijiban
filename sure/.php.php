@@ -1,8 +1,26 @@
-<?php 
-if(isset($_POST['text_sample'])) {  
-$text = htmlspecialchars($_POST['text_sample'], ENT_QUOTES, 'UTF-8');
-$flg = copy('index1.php',"sure/${text}.php" );
+<?php
+function h($str) {
+    return htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
 }
+date_default_timezone_set('Asia/Tokyo');
+session_start(); // 1
+$hizuke = date("Y/m/d H:i:s") . "\n";
+$name = (string)filter_input(INPUT_POST, 'name'); 
+$text = (string)filter_input(INPUT_POST, 'text');
+$token = (string)filter_input(INPUT_POST, 'token'); // 3
+$phpname = basename(__FILE__, ".php");
+$fp = fopen("${phpname}.csv", 'a+b');
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && sha1(session_id()) === $token) { // 3
+    flock($fp, LOCK_EX);
+    fputcsv($fp, [$name, $text,$hizuke]);
+    rewind($fp);
+}
+flock($fp, LOCK_SH);
+while ($row = fgetcsv($fp)) {
+    $rows[] = $row;
+}
+flock($fp, LOCK_UN);
+fclose($fp);
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -150,6 +168,9 @@ $flg = copy('index1.php',"sure/${text}.php" );
         <h1 class="title">
           ぬぬ掲示板
         </h1>
+        <?php 
+        echo "<h1 class=titel>${phpname}</h1>"
+        ?>
         </div>
 <br><br>
         </h1>    
@@ -158,6 +179,26 @@ $flg = copy('index1.php',"sure/${text}.php" );
     </div>
   </section>
   <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <div class="box">
+    <h2 class ="title">投稿一覧</h2>
+    <div class="hyou">
+<?php if (!empty($rows)): ?>
+    <ul>
+<?php foreach ($rows as $row): ?>
+        <li>●<?=h($row[0])?> <?=h($row[2])?>　<br><?=h($row[1])?> <br><br></li>
+<?php endforeach; ?>
+    </ul>
+<?php else: ?>
+    <p>投稿はまだありません</p>
+<?php endif; ?>
+</div>
+</div>
   <br>
   <br>
   <div class="container">
@@ -170,32 +211,29 @@ $flg = copy('index1.php',"sure/${text}.php" );
     </div>
   </div>
   <br>
-  <br>
-  <br>
-  <div class="box"> 
-  <h1 class="title">スレッド一覧</h1>
-  <?php 
-$result = glob('sure/*.php');
-foreach($result as $file){ 
-  $str = str_replace('.php', '', $file);
-  $str = str_replace('sure/', '', $str);
-  echo "<br>";
-  echo "<a href=${file}>●${str}</a>";
-  echo "<br>";
-}
-?>
-</div>
-<br><br><br><br>
+  <section>
   <div class="box">
-    <h2 class = "title">スレッド作成</h2><br>
+    <h2 class = "title">新規投稿</h2>
     <form action="" method="post">
-   <label class="label">名前</label><br>
-    <form method="post" action="" class="form_sample">
-      <input type="text" name="text_sample" size="20" value="<?= $text ?>">
-    <input class="button is-success is-small"  type="submit" value="作成">
+   <label class="label">名前</label>
+        <input type="text" name="name" value="">
+        <br>
+         <br>
+         <label class="label">本文</label> 
+   
+        <input type="text" name="text" value="">
+        <br>
+        <br>
+        <button   class="button is-success" type="submit">投稿</button>
+        <input type="hidden" name="token" value="<?=h(sha1(session_id())) /*2*/ ?>">
     </form>
-</div>
-<footer class="footer">
+    </div>
+  <br>
+  <br>
+  <br>
+  <br>
+  <section>
+  <footer class="footer">
     <div class="content has-text-centered">
       <a href="https://yamadanagamasa.github.io/nunupages/"> © nunu.</a>
       </p>
