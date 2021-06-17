@@ -8,6 +8,7 @@ $hizuke = date("Y/m/d H:i:s") . "\n";
 $name = (string)filter_input(INPUT_POST, 'name'); 
 $text = (string)filter_input(INPUT_POST, 'text');
 $token = (string)filter_input(INPUT_POST, 'token'); // 3
+setlocale(LC_ALL, 'ja_JP.UTF-8');
 $phpname = basename(__FILE__,".php");
 $fp = fopen("${phpname}.csv", 'a+b');
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && sha1(session_id()) === $token) { // 3
