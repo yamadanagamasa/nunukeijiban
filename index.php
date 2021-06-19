@@ -8,17 +8,30 @@ $flg = copy('index1.php',"sure/${text}.php" );
 <html lang="ja">
 <head>
     <meta charset="utf-8">
-    <title>ぬぬ掲示板</title>
+    <title>Nunu Bulletin Board</title>
+    <link href="https://unpkg.com/nes.css@latest/css/nes.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+    <meta name="description" content="Nunu Bulletin Board">
+        <meta property="og:url" content="https://yamadanagamasa.github.io/nunupages/index.html" />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Nunu Bulletin Board" />    
+        <link rel="shortcut icon" href="outline_article_black_24dp.ico" type="image/x-icon">
+        <link rel="apple-touch-icon" href="outline_article_black_24dp.ico" sizes="180x180">
+        <link rel="icon" type="image/png" href="outline_article_black_24dp.ico" sizes="192x192">
 <style>
- .box{
+  .nes-container.is-centered {
+  margin-right: 20%;
+    margin-left: 20%;
+    }
+ .nes-container.is-rounded{
   margin-right: 20%;
     margin-left: 20%;
  }
     body {
       background-color: #eeeeee;
       text-align:center;
-      
+     font-family: "Press Start 2P";font-size: 16px;
   }
   HTML CSSResult Skip Results Iframe
   EDIT ON
@@ -148,18 +161,29 @@ $flg = copy('index1.php',"sure/${text}.php" );
     <div class="hero-body">
       <div class="container">
         <h1 class="title">
-          ぬぬ掲示板
+        <span class="nes-text is-primary">
+        Nunu Bulletin Board
+        </span>
         </h1>
         </div>
 <br><br>
         </h1>    
-        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-        </div>
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw"  class="nes-icon twitter " data-show-count="false"></a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        <a href="index.php"  class="nes-text is-error">home</a> 
+              <a href="about.html"  class="nes-text is-error">about</a>
+ </div>
     </div>
   </section>
   <br>
   <br>
   <br>
+  <br>
+  <br>
+
+<div class="nes-container is-rounded is-dark">
+  <p>Thank you for using this bulletin board.<br><br>
+  
+<span class="nes-text is-success">news:</span>You can now set up threads.</p>
   <div class="container">
     <div class="loadingspinner">
       <div id="square1"></div>
@@ -169,11 +193,10 @@ $flg = copy('index1.php',"sure/${text}.php" );
       <div id="square5"></div>
     </div>
   </div>
-  <br>
-  <br>
-  <br>
-  <div class="box"> 
-  <h1 class="title">スレッド一覧</h1>
+</div>
+<br><br><br><br><br>
+  <div class="nes-container is-rounded"> 
+  <h1 class="nes-text is-primary">Thread list</h1>
   <?php 
 $result = glob('sure/*.php');
 foreach($result as $file){ 
@@ -186,13 +209,13 @@ foreach($result as $file){
 ?>
 </div>
 <br><br><br><br>
-  <div class="box">
-    <h2 class = "title">スレッド作成</h2><br>
+  <div class="nes-container is-rounded">
+    <h2 class = "nes-text is-primary">Thread creation</h2><br>
     <form action="" method="post">
-   <label class="label">名前</label><br>
+   <label class="nes-field">Name</label><br>
     <form method="post" action="" class="form_sample">
-      <input type="text" name="text_sample" size="20" value="<?= $text ?>">
-    <input class="button is-success is-small"  type="submit" value="作成">
+      <input class="nes-input" type="text" name="text_sample" size="20" value="<?= $text ?>"><br><br>
+    <input class="nes-btn is-success"  type="submit" value="create">
     </form>
 </div>
 <footer class="footer">
