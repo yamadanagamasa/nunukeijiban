@@ -192,3 +192,19 @@
     </footer>
   </body>
   </html>
+  <div class="nes-container is-rounded">
+    <h2 class = "title">New post</h2>
+    <form action="" method="post">
+   <label class="label">Name</label>
+        <input class="nes-input"　　type="text" name="name" value="">
+        <br>
+         <br>
+         <label class="label">Text</label> 
+   
+        <input class="nes-input"　type="text" name="text" value="">
+        <br>
+        <br>
+        <button   class="nes-btn is-success"  type="submit">Post</button>
+        <input type="hidden" name="token" value="<?=h(sha1(session_id())) /*2*/ ?>">
+    </form>
+    </div>

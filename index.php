@@ -193,6 +193,24 @@ $flg = copy('index1.php',"sure/${text}.php" );
       <div id="square5"></div>
     </div>
   </div>
+</div><br>
+<div class="nes-container is-rounded is-dark">
+
+<span class="nes-text is-success">Joke</span><br><br>
+  <?php
+$url = "https://official-joke-api.appspot.com/random_joke";
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_HEADER, false);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+$json = curl_exec($ch);
+curl_close($ch);
+$array = json_decode($json, true);
+echo $array["setup"];
+echo "<br><br>";
+echo $array["punchline"];
+?>
 </div>
 
 <br><br><br><br><br>

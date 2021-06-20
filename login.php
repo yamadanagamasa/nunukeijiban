@@ -2,9 +2,6 @@
 function h($str) {
     return htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
 }
-date_default_timezone_set('Asia/Tokyo');
-session_start(); // 1
-$hizuke = date("Y/m/d H:i:s") . "\n";
 $name = (string)filter_input(INPUT_POST, 'name'); 
 $text = (string)filter_input(INPUT_POST, 'text');
 $token = (string)filter_input(INPUT_POST, 'token'); // 3
@@ -31,14 +28,6 @@ fclose($fp);
     <link href="https://unpkg.com/nes.css@latest/css/nes.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
 <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
-
-<meta name="description" content="Nunu Bulletin Board">
-        <meta property="og:url" content="https://yamadanagamasa.github.io/nunupages/index.html" />
-        <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="Nunu Bulletin Board" />    
-        <link rel="shortcut icon" href="outline_article_black_24dp.ico" type="image/x-icon">
-        <link rel="apple-touch-icon" href="outline_article_black_24dp.ico" sizes="180x180">
-        <link rel="icon" type="image/png" href="outline_article_black_24dp.ico" sizes="192x192">
 <style>
  .nes-container.is-rounded{
   margin-right: 20%;
@@ -202,20 +191,6 @@ fclose($fp);
   <br>
   <br>
   <br>
-  <div class="nes-container is-rounded"> 
-    <h2 class ="nes-text is-primary">Post list</h2>
-    <div class="hyou">
-<?php if (!empty($rows)): ?>
-    <ul>
-<?php foreach ($rows as $row): ?>
-        <li>●<?=h($row[0])?> <?=h($row[2])?>　<br><?=h($row[1])?> <br><br></li>
-<?php endforeach; ?>
-    </ul>
-<?php else: ?>
-    <p>No posts yet</p>
-<?php endif; ?>
-</div>
-</div>
   <br>
   <br>
   <div class="container">
@@ -230,13 +205,13 @@ fclose($fp);
   <br>
   <section>
   <div class="nes-container is-rounded">
-    <h2 class = "title">New post</h2>
+    <h2 class = "title">New path</h2>
     <form action="" method="post">
    <label class="label">Name</label>
         <input class="nes-input"　　type="text" name="name" value="">
         <br>
          <br>
-         <label class="label">Text</label> 
+         <label class="label">path</label> 
    
         <input class="nes-input"　type="text" name="text" value="">
         <br>
