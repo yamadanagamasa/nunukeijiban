@@ -194,6 +194,7 @@ $flg = copy('index1.php',"sure/${text}.php" );
     </div>
   </div>
 </div>
+
 <br><br><br><br><br>
   <div class="nes-container is-rounded"> 
   <h1 class="nes-text is-primary">Thread list</h1>
