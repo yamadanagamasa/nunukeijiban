@@ -4,17 +4,34 @@ function h($str) {
 }
 date_default_timezone_set('Asia/Tokyo');
 session_start(); // 1
-$hizuke = date("Y/m/d H:i:s") . "\n";
+$hizuke = date("Y/m/d H:i") . "\n";
 $name = (string)filter_input(INPUT_POST, 'name'); 
 $text = (string)filter_input(INPUT_POST, 'text');
 $token = (string)filter_input(INPUT_POST, 'token'); // 3
+setlocale(LC_ALL, 'ja_JP.UTF-8');
 $phpname = basename(__FILE__,".php");
 $fp = fopen("${phpname}.csv", 'a+b');
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && sha1(session_id()) === $token) { // 3
-    flock($fp, LOCK_EX);
-    fputcsv($fp, [$name, $text,$hizuke]);
-    rewind($fp);
+  if (isset($_POST['upload'])) {
+           $image = uniqid(mt_rand(), true);//ファイル名をユニーク化
+           $image .= '.' . substr(strrchr($_FILES['image']['name'], '.'), 1);//アップロードされたファイルの拡張子を取得
+           $file = "../images/${image}";
+           $tempfile = $_FILES['image']['tmp_name'];
+           if (is_uploaded_file($tempfile)) {
+           if (!empty($_FILES['image']['name'])) {//ファイルが選択されていれば$imageにファイル名を代入
+               move_uploaded_file($_FILES['image']['tmp_name'],$file );//imagesディレクトリにファイル保存
+               if (exif_imagetype($file)) {//画像ファイルかのチェック
+                flock($fp, LOCK_EX);
+                fputcsv($fp, [$name, $text,$hizuke,$file]);
+                rewind($fp);
+               } else { array_map('unlink', glob("images/$file"));
+               }}}else{
+                flock($fp, LOCK_EX);
+                fputcsv($fp, [$name, $text,$hizuke]);
+                rewind($fp);
+               }}
 }
+
 flock($fp, LOCK_SH);
 while ($row = fgetcsv($fp)) {
     $rows[] = $row;
@@ -26,17 +43,27 @@ fclose($fp);
 <html lang="ja">
 <head>
     <meta charset="utf-8">
-    <title>ぬぬ掲示板</title>
+    <title>Nunu Bulletin Board</title>
+    <link href="https://unpkg.com/nes.css@latest/css/nes.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+<link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+
+<meta name="description" content="Nunu Bulletin Board">
+        <meta property="og:url" content="https://yamadanagamasa.github.io/nunupages/index.html" />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Nunu Bulletin Board" />    
+        <link rel="shortcut icon" href="outline_article_black_24dp.ico" type="image/x-icon">
+        <link rel="apple-touch-icon" href="outline_article_black_24dp.ico" sizes="180x180">
+        <link rel="icon" type="image/png" href="outline_article_black_24dp.ico" sizes="192x192">
 <style>
- .box{
+ .nes-container.is-rounded{
   margin-right: 20%;
     margin-left: 20%;
  }
     body {
       background-color: #eeeeee;
       text-align:center;
-      
+     font-family: "Press Start 2P";font-size: 18px;
   }
   HTML CSSResult Skip Results Iframe
   EDIT ON
@@ -166,36 +193,47 @@ fclose($fp);
     <div class="hero-body">
       <div class="container">
         <h1 class="title">
-          ぬぬ掲示板
+        <span class="nes-text is-primary">
+        Nunu Bulletin Board
+        </span>
         </h1>
         <?php 
-        echo "<h1 class=titel>${phpname}</h1>"
+        echo "<h1 class='nes-text is-success'>${phpname}</h1>"
         ?>
         </div>
 <br><br>
         </h1>    
-        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-        </div>
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw"  class="nes-icon twitter " data-show-count="false"></a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        <a href="../index.php"  class="nes-text is-error">home</a>
+        <a href="about.html"  class="nes-text is-error">about</a>
+       </div>
     </div>
   </section>
   <br>
   <br>
   <br>
   <br>
+         <a type="button" class="nes-btn is-warning is-small" href="..">back</a>
   <br>
   <br>
   <br>
-  <div class="box">
-    <h2 class ="title">投稿一覧</h2>
+  <br>
+  <div class="nes-container is-rounded"> 
+    <h2 class ="nes-text is-primary">Post list</h2>
     <div class="hyou">
 <?php if (!empty($rows)): ?>
     <ul>
 <?php foreach ($rows as $row): ?>
-        <li>●<?=h($row[0])?> <?=h($row[2])?>　<br><?=h($row[1])?> <br><br></li>
+        <li>●<?=h($row[0])?> <?=h($row[2])?><br><?=h($row[1])?><br><br></li>
+        <?php
+        $x = h($row[3]);
+        if (!empty($x)){
+        echo "<a href=${x}>This is images</a><br><br>";}
+        ?>
 <?php endforeach; ?>
     </ul>
 <?php else: ?>
-    <p>投稿はまだありません</p>
+    <p>No posts yet</p>
 <?php endif; ?>
 </div>
 </div>
@@ -212,19 +250,22 @@ fclose($fp);
   </div>
   <br>
   <section>
-  <div class="box">
-    <h2 class = "title">新規投稿</h2>
-    <form action="" method="post">
-   <label class="label">名前</label>
-        <input type="text" name="name" value="">
+  <div class="nes-container is-rounded">
+    <h2 class = "title">New post</h2>
+    <form action="" method="post" enctype="multipart/form-data">
+   <label class="label">Name</label>
+        <input class="nes-input"　　type="text" name="name" value="">
         <br>
          <br>
-         <label class="label">本文</label> 
+         <label class="label">Text</label> 
    
-        <input type="text" name="text" value="">
-        <br>
-        <br>
-        <button   class="button is-success" type="submit">投稿</button>
+        <input class="nes-input"　type="text" name="text" value="">
+        <br><br>
+<label class="nes-btn">
+  <span>Select your file</span>
+  <input  type="file" name="image"></label>
+        <br><br>
+        <button   class="nes-btn is-success" name="upload"  type="submit">Post</button>
         <input type="hidden" name="token" value="<?=h(sha1(session_id())) /*2*/ ?>">
     </form>
     </div>

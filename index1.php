@@ -4,7 +4,7 @@ function h($str) {
 }
 date_default_timezone_set('Asia/Tokyo');
 session_start(); // 1
-$hizuke = date("Y/m/d H:i:s") . "\n";
+$hizuke = date("Y/m/d H:i") . "\n";
 $name = (string)filter_input(INPUT_POST, 'name'); 
 $text = (string)filter_input(INPUT_POST, 'text');
 $token = (string)filter_input(INPUT_POST, 'token'); // 3
@@ -12,10 +12,26 @@ setlocale(LC_ALL, 'ja_JP.UTF-8');
 $phpname = basename(__FILE__,".php");
 $fp = fopen("${phpname}.csv", 'a+b');
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && sha1(session_id()) === $token) { // 3
-    flock($fp, LOCK_EX);
-    fputcsv($fp, [$name, $text,$hizuke]);
-    rewind($fp);
+  if (isset($_POST['upload'])) {
+           $image = uniqid(mt_rand(), true);//ファイル名をユニーク化
+           $image .= '.' . substr(strrchr($_FILES['image']['name'], '.'), 1);//アップロードされたファイルの拡張子を取得
+           $file = "../images/${image}";
+           $tempfile = $_FILES['image']['tmp_name'];
+           if (is_uploaded_file($tempfile)) {
+           if (!empty($_FILES['image']['name'])) {//ファイルが選択されていれば$imageにファイル名を代入
+               move_uploaded_file($_FILES['image']['tmp_name'],$file );//imagesディレクトリにファイル保存
+               if (exif_imagetype($file)) {//画像ファイルかのチェック
+                flock($fp, LOCK_EX);
+                fputcsv($fp, [$name, $text,$hizuke,$file]);
+                rewind($fp);
+               } else { array_map('unlink', glob("images/$file"));
+               }}}else{
+                flock($fp, LOCK_EX);
+                fputcsv($fp, [$name, $text,$hizuke]);
+                rewind($fp);
+               }}
 }
+
 flock($fp, LOCK_SH);
 while ($row = fgetcsv($fp)) {
     $rows[] = $row;
@@ -188,8 +204,8 @@ fclose($fp);
 <br><br>
         </h1>    
         <a href="https://twitter.com/share?ref_src=twsrc%5Etfw"  class="nes-icon twitter " data-show-count="false"></a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-        <a href="index.php"  class="nes-text is-error">home</a>
-        <a href="about.html"  class="nes-text is-error">about</a>
+        <a href="../index.php"  class="nes-text is-error">home</a>
+        <a href="../about.html"  class="nes-text is-error">about</a>
        </div>
     </div>
   </section>
@@ -208,7 +224,12 @@ fclose($fp);
 <?php if (!empty($rows)): ?>
     <ul>
 <?php foreach ($rows as $row): ?>
-        <li>●<?=h($row[0])?> <?=h($row[2])?>　<br><?=h($row[1])?> <br><br></li>
+        <li>●<?=h($row[0])?> <?=h($row[2])?><br><?=h($row[1])?><br><br></li>
+        <?php
+        $x = h($row[3]);
+        if (!empty($x)){
+        echo "<a href=${x}>This is images</a><br><br>";}
+        ?>
 <?php endforeach; ?>
     </ul>
 <?php else: ?>
@@ -231,7 +252,7 @@ fclose($fp);
   <section>
   <div class="nes-container is-rounded">
     <h2 class = "title">New post</h2>
-    <form action="" method="post">
+    <form action="" method="post" enctype="multipart/form-data">
    <label class="label">Name</label>
         <input class="nes-input"　　type="text" name="name" value="">
         <br>
@@ -239,9 +260,12 @@ fclose($fp);
          <label class="label">Text</label> 
    
         <input class="nes-input"　type="text" name="text" value="">
-        <br>
-        <br>
-        <button   class="nes-btn is-success"  type="submit">Post</button>
+        <br><br>
+<label class="nes-btn">
+  <span>Select your file</span>
+  <input  type="file" name="image"></label>
+        <br><br>
+        <button   class="nes-btn is-success" name="upload"  type="submit">Post</button>
         <input type="hidden" name="token" value="<?=h(sha1(session_id())) /*2*/ ?>">
     </form>
     </div>

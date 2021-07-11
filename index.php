@@ -152,6 +152,68 @@ $flg = copy('index1.php',"sure/${text}.php" );
     0%      {transform: scale(0.75); opacity: 0.0;}
     100%    {transform: scale(1.0); opacity: 1.0;}
   }
+
+  HTML CSSResult Skip Results Iframe
+  EDIT ON
+    
+  .typewriter {
+    position: absolute;
+    top: 20%;
+  }
+
+  .typewriter h1 {
+    border-right: 1px solid white;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    animation: typewriter 2s steps(25) 1s 1 normal both;
+  }
+
+  .typewriter #line-1 {
+    border-right: 1px solid white;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 425px;
+    white-space: nowrap;
+    overflow: hidden;
+    animation: typewriter 3s steps(40) 1s 1 normal both;
+    animation-delay: 3.5s;
+  }
+
+
+  @keyframes typewriter {
+    0% {
+      width: 0;
+      border-right: none;
+    }
+    0.1% {
+      border-right: 1px solid rgb(220,220,220);
+    }
+    99.9% {
+      border-right: 1px solid rgb(220,220,220);
+    }
+    100% {
+      border: none;
+    }
+  }
+
+  i {
+  opacity: 0;
+  animation: fadeIn 2s ease-in-out;
+  animation-delay: 10s;
+  animation-fill-mode: forwards;
+  padding-top: 1rem;
+  padding-left: 20px;
+
+  }
+
+
+  @keyframes fadeIn {
+  from {opacity:0;}
+  to {opacity:1;}
+  }
 </style>
 </head>
 <body>
@@ -162,8 +224,13 @@ $flg = copy('index1.php',"sure/${text}.php" );
       <div class="container">
         <h1 class="title">
         <span class="nes-text is-primary">
+        <div class="typewriter">
+        <h1>
         Nunu Bulletin Board
-        </span>
+        </h1>
+        <a href="mailto:di.lisova@gmail.com" target="_blank"><i class="fa fa-envelope-o fa-2x" aria-hidden="true"></i></a>
+        </span>        
+        </div>
         </h1>
         </div>
 <br><br>

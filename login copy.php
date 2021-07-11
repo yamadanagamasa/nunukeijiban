@@ -11,12 +11,12 @@ if (($handle = fopen("login.csv", "r")) !== FALSE) {
     while (($data = fgetcsv($handle))) {
       if($data[0]==$name){
         if($data[1]==$text){
-                    session_start();
-
+          session_start();
           print('セッションIDは '.$_COOKIE['PHPSESSID'].' です。');
-
           $_SESSION['username'] = $name;
           echo 'ユーザー名は '. $_SESSION['username'].' 。';
+            
+
         }
       }
     }
